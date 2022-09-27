@@ -13,7 +13,7 @@ import datetime
 6. CUIで動くゲームにする
 """
 
-global target_num, loss_num, max_act_num   #対象文字数、欠損文字数をグローバル変数として定義する
+global target_num, loss_num, max_act_num   #対象文字数、欠損文字数をグローバル変数として定義する.
 
 def random_choice_alphabet(target_num, loss_num, max_act_num):
     num = 1

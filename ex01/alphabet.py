@@ -12,6 +12,7 @@ import datetime
 5. 例外処理は必要ない
 6. CUIで動くゲームにする
 """
+
 global target_num, loss_num, max_act_num   #対象文字数、欠損文字数をグローバル変数として定義する
 
 def random_choice_alphabet(target_num, loss_num, max_act_num):
@@ -29,34 +30,46 @@ def random_choice_alphabet(target_num, loss_num, max_act_num):
             print(i + " ", end = "")
             
         print()
-        print("欠損文字")   #欠損文字列を表示する
+        print("欠損文字 : ")   #欠損文字列を表示する
         for i in loss_alpha_list:
             print(i + " ", end = "")
             
         print()
-        num_ans = int(input("欠損文字はいくつあるでしょうか : "))   #回答者の欠損文字数を保持
+        try :
+            num_ans = int(input("欠損文字はいくつあるでしょうか : "))   #回答者の欠損文字数を保持
         
-        if num_ans == loss_num:
+        except ValueError as e:
+            num_ans = int(input("数字を入力してください : "))   #例外処理
+        
+        if num_ans == loss_num:   #欠損文字数の判定を行う
             print("正解です")
-            print("それでは具体的に欠損文字を一つずつ入力してください")
+            print("それでは具体的に欠損文字を一つずつ入力してください")   #欠損文字の入力を促す
             ans_1 = input("一つ目の文字を入力してください : ")
             ans_2 = input("二つ目の文字を入力してください : ")
             
-            if {ans_1, ans_2} == loss_alpha:
+            if {ans_1, ans_2} == loss_alpha:   #もし二つとも正解ならば
                 print("正解です")
                 break
                 
+            else:   #正解でないならば
+                if num >= max_act_num:
+                    print("不正解です。これ以上チャレンジできません")
+                else:
+                    print("不正解です。またチャレンジしてください")
+                    print("-" * 10)
+            
+        else:   #欠損文字数が異なれば
+            if num >= max_act_num:
+                print("不正解です。これ以上チャレンジできません")
             else:
                 print("不正解です。またチャレンジしてください")
                 print("-" * 10)
             
-        else:
-            print("不正解です。またチャレンジしてください")
-            print("-" * 10)
+        num += 1
         
 if __name__ == "__main__":
-    target_num, loss_num, max_act_num = 10, 2, 5
+    target_num, loss_num, max_act_num = 10, 2, 5   #対象文字数、欠損文字数、最大繰り返し回数を保持しておく
     start_time = datetime.datetime.now()   #回答開始時間を保持する
-    random_choice_alphabet(target_num, loss_num, max_act_num)
-    finish_time = datetime.datetime.now()
+    random_choice_alphabet(target_num, loss_num, max_act_num)   #アルファベットゲームを開始する
+    finish_time = datetime.datetime.now()   #回答終了時間を保持する
     print(f"所要時間は{(finish_time - start_time).seconds}秒です。")   #所要時間を表示

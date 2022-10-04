@@ -27,32 +27,51 @@ import tkinter.messagebox as tkm
 
 def button_click(event):
     """
-    ボタンを押したときの反応する
+    ボタンが押された時の処理
     """
     button = event.widget
     text = button["text"]
-    tkm.showinfo("情報", f"{text}のボタンがクリックされました")
-
-def get_button_info(event):
-    button = event.widget
-    text = button["text"]
-    return text
+    if text == "+":
+        entry.insert(tk.END, " " + text + " ")   #練習5
+        
+    else:
+        entry.insert(tk.END, text)
+    #tkm.showinfo("情報", f"{text}のボタンがクリックされました")
     
+    
+def eq_button_click(event):
+    """
+    イコールボタンが押された時の処理
+    """
+    s = entry.get()   #選択された数式. (type = str)
+    ans = eval(s)
+    entry.delete(0, tk.END)
+    entry.insert(tk.END, ans)   #練習7
+
 root = tk.Tk()   
 root.title("電卓")
-size = "300x600"
+size = "400x600"
 f = ("Times New Roman", 30)
-root.geometry(size)
-  
+root.geometry(size)   #練習1
+
+#entryの作成
+entry = tk.Entry(width = 10, font = f)
+entry.grid(row = 0, column = 0, columnspan = 3)   #練習4
+
+#+ボタンの作成
+button_plus = tk.Button(root, text = "+", font = f, width = 4, height = 2)   #+ボタン作成. 練習6
+button_plus.grid(row = 3, column = 3)
+button_plus.bind("<1>", button_click)
+
+#=ボタンの作成
+button_eq = tk.Button(root, text = "=", font = f, width = 4, height = 2, justify = "right")   #=ボタン作成. 練習7
+button_eq.grid(row = 4, column = 3)
+button_eq.bind("<1>", eq_button_click)
 
 loc_list = [(3, 0), (2, 2), (2, 1), (2, 0), (1, 2), (1, 1), (1, 0), (0, 2), (0, 1), (0, 0)]   #各ボタンの位置を指定する
 for i, loc in zip(range(0, 10), loc_list):
     button = tk.Button(root, text = str(i), font = f, width = 4, height = 2)   #各ボタン生成する
-    button.grid(row = loc[0] + 1, column = loc[1])   #配置
-    button.bind("<1>", button_click)   #button_clickをbindする
+    button.grid(row = loc[0] + 1, column = loc[1])   #練習2
+    button.bind("<1>", button_click)   #練習3
     
-entry = tk.Entry(width = 10, font = f)
-entry.insert(tk.END, "")
-entry.grid(row = 0, column = 0, columnspan = 3)   #4 
-
 root.mainloop()

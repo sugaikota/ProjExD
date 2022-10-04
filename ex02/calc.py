@@ -56,7 +56,7 @@ def eq_button_click(event):
     イコールボタンが押された時の処理
     """
     s = entry.get()   #選択された数式. (type = str)
-    ans = round((eval(s), 3))
+    ans = round(eval(s), 3)
     
     entry.delete(0, tk.END)
     entry.insert(tk.END, ans)   #練習7

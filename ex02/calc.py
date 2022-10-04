@@ -32,9 +32,9 @@ def button_click(event):
     """
     button = event.widget
     text = button["text"]
-    if text == "+" or text == "-" or text == "*" or text == "/":
+    if text in ["+", "-", "*", "/"]:
         try: 
-            if entry.get()[-1] == "+" or entry.get()[-1] == "-" or entry.get()[-1] == "*" or entry.get()[-1] == "/":
+            if entry.get()[-1] in ["+", "-", "*", "/"]:  #issue #4 
                 root.after(1, eq_button)
             else:
                 entry.insert(tk.END, text)
@@ -77,78 +77,30 @@ def reset_button():
     tkm.showinfo("リセット", "数式がリセットされました")
     
     
-def sin_button_click(event):
-    """
-    sin()ボタンが押された時の処理
-    """
-    s = entry.get()
-    try:
-        text = round(math.sin(float(s[-1])), 2)
-        
-    except IndexError as e:
-        pass 
-    
-    except ValueError as e:
-        root.after(1, warning_show)
-        
-    entry.delete(len(s) - 1, tk.END)
-    entry.insert(tk.END, text)
-    
-
-def cos_button_click(event):
+def func_button_click(event):   #issue #5
     """ 
-    cos()ボタンが押された時の処理
+    関数ボタンが押された時の処理
     """
     s = entry.get()
-    try:
-        text = round(math.cos(float(s[-1])), 2)
-        
-    except IndexError as e:
-        pass 
+    button = event.widget
+    types = button["text"]
+    func_list = [(math.sin, "sin()"), (math.cos, "cos()"), (math.tan, "tan()"), (math.exp, "exp()")]
     
-    except ValueError as e:
-        root.after(1, warning_show)
+    for i in func_list:
+        if type == i[1]:
+            try:
+                text = round(i[0](float(s[-1])), 2)
+                
+            except IndexError as e:
+                pass 
+            
+            except ValueError as e:
+                root.after(1, warning_show)
         
     entry.delete(len(s) - 1, tk.END)
     entry.insert(tk.END, text)
     
-    
-def tan_button_click(event):
-    """ 
-    tan()ボタンが押された時の処理
-    """
-    s = entry.get()
-    try:
-        text = round(math.tan(float(s[-1])), 2)
         
-    except IndexError as e:
-        pass 
-    
-    except ValueError as e:
-        root.after(1, warning_show)
-        
-    entry.delete(len(s) - 1, tk.END)
-    entry.insert(tk.END, text)
-    
-
-def exp_button_click(event):
-    """ 
-    exp()ボタンが押された時の処理
-    """
-    s = entry.get()
-    try:
-        text = round(math.exp(float(s[-1])), 2)
-        
-    except IndexError as e:
-        pass 
-    
-    except ValueError as e:
-        root.after(1, warning_show)
-        
-    entry.delete(len(s) - 1, tk.END)
-    entry.insert(tk.END, text)
-    
-    
 def warning_show():
     tkm.showwarning("警告", "数字以外は関数内に入れられません")
 
@@ -163,7 +115,7 @@ entry = tk.Entry(width = 10, font = f)
 entry.grid(row = 0, column = 0, columnspan = 3)   #練習4
 
 #数字以外のボタンの作成. zip内で、そのボタンで表示するテキスト、そのボタンの位置、bindする関数を置いている
-for t, loc, func in zip(["+", "-", "*", "/", "reset", "=", "sin()", "cos()", "tan()", "exp()"], [(2, 3), (3, 3), (4, 3), (5, 3), (5, 1), (5, 2), (1, 0), (1, 1), (1, 2), (1, 3)], [button_click, button_click, button_click, button_click, reset_button_click, eq_button_click, sin_button_click, cos_button_click, tan_button_click, exp_button_click]):
+for t, loc, func in zip(["+", "-", "*", "/", "reset", "=", "sin()", "cos()", "tan()", "exp()"], [(2, 3), (3, 3), (4, 3), (5, 3), (5, 1), (5, 2), (1, 0), (1, 1), (1, 2), (1, 3)], [button_click, button_click, button_click, button_click, reset_button_click, eq_button_click, func_button_click, func_button_click, func_button_click, func_button_click]):
     button = tk.Button(root, text = t, font = f, width = 4, height = 2, justify = "right")
     button.grid(row = loc[0], column = loc[1])
     button.bind("<1>", func) 

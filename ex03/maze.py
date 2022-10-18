@@ -28,5 +28,31 @@ def key_down(event):
 def key_up(event):
     global key
     key = ""
+  
+"""  
+#常時起動するリアルタイム処理関数main_proc()を定義する
+#グローバル変数cx, cyの値を適切に増減することで、キャラを動かす
+#グローバル変数keyの値によって動きを分ける
+#UP : 上に20
+#Down : 下に20
+#Left : 左に20
+#Right : 右に20
+#canvasクラスのインスタンスメソッドcoordsで座標を更新する
+#mainproc()を呼び出し、常時起動するようにする
+"""
+def main_proc():
+    global cx, cy, key
+    if key == "Up":
+        cy += 20
+    elif key == "Down":
+        cy -= 20
+    elif key == "Left":
+        cx -= 20
+    elif key == "Right":
+        cx += 20
+        
+    canvas.coords(chr, cx, cy)    
+            
     
+main_proc()    
 canvas.mainloop()

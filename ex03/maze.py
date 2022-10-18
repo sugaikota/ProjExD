@@ -23,5 +23,10 @@ def key_down(event):
     global key
     key = event.keysym
     
+#関数key_upを定義し、"<KeyRelease>"イベントと紐づける
+#グローバル変数keyに空文字列""を代入する
+def key_up(event):
+    global key
+    key = ""
     
 canvas.mainloop()

@@ -6,7 +6,7 @@ import random
 #5. 関数key_downを定義し、"<KeyPress>"イベントと紐づける
 def key_down(event):
     global key
-    key = event.keysym
+    key = event.keysym   #押されたキーを取得する
     main_proc()
     goal_check()   #ゴールしたかを判定する
 
@@ -14,7 +14,7 @@ def key_down(event):
 #6. 関数key_upを定義し、"<KeyRelease>"イベントと紐づける
 def key_up(event):
     global key
-    key = ""
+    key = ""   #keyを初期化する
   
 
 def goal_check():
@@ -22,48 +22,48 @@ def goal_check():
     ゴール([14, 8])に到達したかを判定する
     """
     global image_file
-    goal_pos_x, goal_pos_y = 13, 7
-    if (my_pos_x, my_pos_y) == (goal_pos_x, goal_pos_y):
+    goal_pos_x, goal_pos_y = 13, 7   #ゴールの位置を保持
+    if (my_pos_x, my_pos_y) == (goal_pos_x, goal_pos_y):   #自キャラの位置がゴールの位置にあったら
         image_f = "fig/9.png"
         goal_chr = tk.PhotoImage(file = image_f)
         canvas.create_image(cx, cy, image = goal_chr, tag = "goal_chr")
         root.after(1000, lambda: root.destroy())   #ゴールをすると一秒後にプログラム終了
-        tkm.showinfo("congratulations!", "ゴールしました")
+        tkm.showinfo("congratulations!", "ゴールしました")   #ポップアップを表示
 
 
 #7. 常時起動するリアルタイム処理関数main_proc()を定義する
 def main_proc():
     global cx, cy, key, canvas, my_pos_x, my_pos_y
-    if key == "Up":
+    if key == "Up":   #上に動いたとき
         if (maze_list[my_pos_y - 1][my_pos_x]) == 1:
             pass
         else:
             my_pos_y -= 1
                 
-    elif key == "Down":
+    elif key == "Down":   #下に動いたとき 
         if (maze_list[my_pos_y + 1][my_pos_x]) == 1:
             pass
         else:
             my_pos_y += 1
                 
-    elif key == "Left":
+    elif key == "Left":   #左に動いたとき  
         if (maze_list[my_pos_y][my_pos_x - 1]) == 1:
             pass
         else:
             my_pos_x -= 1
                 
-    elif key == "Right":
+    elif key == "Right":   #右に動いたとき
         if (maze_list[my_pos_y][my_pos_x + 1]) == 1:
             pass
         else:    
             my_pos_x += 1
             
     cx, cy = my_pos_x * 100 + 50, my_pos_y * 100 + 50
-    if collision_detected() == True:
-        my_pos_x, my_pos_y = 1, 1
+    if collision_detected() == True:   #障害物と衝突したとき
+        my_pos_x, my_pos_y = 1, 1   #スタート位置に戻す
         cx, cy = my_pos_x * 100 + 50, my_pos_y * 100 + 50
         
-    canvas.coords("chr", cx, cy)
+    canvas.coords("chr", cx, cy)   #座標位置を更新する
     
             
 def act_obj():
@@ -122,7 +122,7 @@ if __name__ == "__main__":
     root.bind("<KeyPress>", key_down)
     root.bind("<KeyRelease>", key_up)
     
-    #邪魔なobjを作る
+    #邪魔な障害物を作る
     obj_x, obj_y = random.randint(0, 15), random.randint(0, 9)   #マスによるobjの座標
     obj_pos_x, obj_pos_y = obj_x * 100 + 50, obj_y * 100 + 50   #座標によるobjの座標
     obj = tk.PhotoImage(file = "fig/5.png")

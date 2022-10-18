@@ -34,29 +34,17 @@ def goal_check():
 #7. 常時起動するリアルタイム処理関数main_proc()を定義する
 def main_proc():
     global cx, cy, key, canvas, my_pos_x, my_pos_y
-    if key == "Up":   #上に動いたとき
-        if (maze_list[my_pos_y - 1][my_pos_x]) == 1:
-            pass
-        else:
-            my_pos_y -= 1
-                
-    elif key == "Down":   #下に動いたとき 
-        if (maze_list[my_pos_y + 1][my_pos_x]) == 1:
-            pass
-        else:
-            my_pos_y += 1
-                
-    elif key == "Left":   #左に動いたとき  
-        if (maze_list[my_pos_y][my_pos_x - 1]) == 1:
-            pass
-        else:
-            my_pos_x -= 1
-                
-    elif key == "Right":   #右に動いたとき
-        if (maze_list[my_pos_y][my_pos_x + 1]) == 1:
-            pass
-        else:    
-            my_pos_x += 1
+    l = [["Up", maze_list[my_pos_y - 1][my_pos_x], my_pos_y, -1], ["Down", (maze_list[my_pos_y + 1][my_pos_x]), my_pos_y, 1], ["Left", (maze_list[my_pos_y][my_pos_x - 1]), my_pos_x, -1], ["Right", (maze_list[my_pos_y][my_pos_x + 1]), my_pos_x, 1]]
+    
+    for i in l:
+        if key == i[0]:
+            if i[1] == 1:
+                pass
+            else:
+                if id(i[2]) == id(my_pos_x):
+                    my_pos_x += i[3]
+                elif id(i[2]) == id(my_pos_y):
+                    my_pos_y += i[3]
             
     cx, cy = my_pos_x * 100 + 50, my_pos_y * 100 + 50
     if collision_detected() == True:   #障害物と衝突したとき

@@ -23,14 +23,14 @@ def key_down(event):
     global key
     key = event.keysym
     
-#関数key_upを定義し、"<KeyRelease>"イベントと紐づける
+#6. 関数key_upを定義し、"<KeyRelease>"イベントと紐づける
 #グローバル変数keyに空文字列""を代入する
 def key_up(event):
     global key
     key = ""
   
 """  
-#常時起動するリアルタイム処理関数main_proc()を定義する
+#7. 常時起動するリアルタイム処理関数main_proc()を定義する
 #グローバル変数cx, cyの値を適切に増減することで、キャラを動かす
 #グローバル変数keyの値によって動きを分ける
 #UP : 上に20
@@ -53,6 +53,9 @@ def main_proc():
         
     canvas.coords(chr, cx, cy)    
             
-    
+#9. maze_makerモジュールのmake_maze関数を呼び出し、迷路を作る            
+maze_list = mk.make_maze(15, 9)
+
+
 main_proc()    
 canvas.mainloop()

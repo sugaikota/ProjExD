@@ -17,4 +17,11 @@ canvas.create_image(cx, cy, image = chr, tag = "chr")
 #4. グローバル変数keyを空文字列で初期化する
 key = ""
 
+#5. 関数key_downを定義し、"<KeyPress>"イベントと紐づける
+#グローバル変数keyに押されたキーのシン折るkeysymを代入する
+def key_down(event):
+    global key
+    key = event.keysym
+    
+    
 canvas.mainloop()

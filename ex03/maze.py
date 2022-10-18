@@ -14,4 +14,7 @@ image_file = "fig/1.png"
 chr = tk.PhotoImage(file = image_file)
 canvas.create_image(cx, cy, image = chr, tag = "chr")
 
+#4. グローバル変数keyを空文字列で初期化する
+key = ""
+
 canvas.mainloop()

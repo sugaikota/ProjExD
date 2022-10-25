@@ -8,16 +8,16 @@ def chr_move_update():
     4. 矢印キーによりこうかとんが移動できるようにする
     """
     global key_list, chr_image, chr_x, chr_y, chr_image_rect
-    if key_list[pg.K_UP] == True:
+    if key_list[pg.K_UP]:
         chr_y -= 5
     
-    if key_list[pg.K_DOWN] == True:
+    if key_list[pg.K_DOWN]:
         chr_y += 5
         
-    if key_list[pg.K_LEFT] == True:
+    if key_list[pg.K_LEFT]:
         chr_x -= 5
         
-    if key_list[pg.K_RIGHT] == True:
+    if key_list[pg.K_RIGHT]:
         chr_x += 5
         
     chr_image_rect.center = chr_x, chr_y   #Rectオブジェクトの位置更新
@@ -153,7 +153,7 @@ def time_update():
     global g, time, bombs_list
     time += 1   # ゲームの経過時間を更新する
     if time % 500 == 0:   # 5[s]おきに
-        for i in bombs_list:   #核爆弾の速度を増加させる
+        for i in bombs_list:   # 各爆弾の速度を増加させる
             if i[2] > 0:
                 i[2] += 0.5
             else:

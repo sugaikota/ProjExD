@@ -110,7 +110,6 @@ class BirdBullet:
         pg.draw.circle(self.sfc, (0, 255, 0), (10, 10), self.r)
         self.rct = self.sfc.get_rect()
         
-        
         self.rct.centerx, self.rct.centery = bird.rct.centerx, bird.rct.centery
         
     def blit(self, sfc: Screen):
@@ -261,6 +260,9 @@ def bird_bullet_show(sfc: Screen):
 
 
 def bomb_appearance(sfc: Screen):
+    """ 
+    爆弾を一定時間ごとに出現させる
+    """
     global bomb_list
     BOMB_NUM = 10
     if time % 1200 * 3 == 0:
@@ -271,6 +273,9 @@ def bomb_appearance(sfc: Screen):
         
 
 def bomb_show(sfc: Screen):
+    """ 
+    爆弾を表示する
+    """
     global bomb_list
     for bomb in bomb_list:
         bomb.update(sfc)
@@ -306,4 +311,4 @@ if __name__ == "__main__":
         all_col_check()   # 衝突したかを判定する
 
         pg.display.update()    # 2. display.update()
-        clock_obj.tick(500)   # 2. 1000[fps]
+        clock_obj.tick(500)   # 2. 500[fps]

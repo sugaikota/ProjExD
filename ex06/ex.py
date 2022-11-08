@@ -25,20 +25,21 @@ class MyTable:
     """ 
     味方台にまつわることを制御する
     """
-    def __init__(self, x: int, y: int, vx: int, vy: int, color: tuple=(255, 255, 255)):
+    def __init__(self, size: tuple[int, int], x: int, y: int, vx: int, vy: int, color: tuple=(255, 255, 255)):
         """ 
         イニシャライザ
-        color : 色のタプル(tuple)
+        size : 台の大きさ
         x : 初期x座標
         y : 初期y座標
         vx : x座標方向速度
         vy : y座標方向速度
+        color : 色のタプル
         """
         self.vx, self.vy = vx, vy   # 速度
         self.color = color   # 台の色
         self.key_delta = {pg.K_UP : (0, -vy), pg.K_DOWN : (0, vy)}   # キーによる速度変化
         
-        self.rct = pg.Rect(x, y, 10, 30)   # 台のrectオブジェクト生成
+        self.rct = pg.Rect(x, y, size[0], size[1])   # 台のrectオブジェクト生成
         
     def blit(self, sfc: Screen):
         """ 
@@ -63,21 +64,22 @@ class CPUTable:
     """ 
     敵台にまつわることを制御する
     """
-    def __init__(self, x: int, y: int, vx: int, vy: int, color: tuple=(255, 255, 255)):
+    def __init__(self, size: tuple[int, int], x: int, y: int, vx: int, vy: int, color: tuple=(255, 255, 255)):
         """
         イニシャライザ
-        color : 色のタプル(tuple)
+        size : 台の大きさ
         x : 初期x座標
         y : 初期y座標
         vx : x座標方向速度
         vy : y座標方向速度
+        color : 色のタプル
         """
         self.vx, self.vy = vx, vy   # 速度
         self.color = color   # 台の色
         self.count = 1   # ボールとの接触回数を取得する
         self.v = 0   # 速度の変化量
          
-        self.rct = pg.Rect(x, y, 10, 30)   # 敵台のRectオブジェクトを生成
+        self.rct = pg.Rect(x, y, size[0], size[1])   # 敵台のRectオブジェクトを生成
         
     def blit(self, sfc: Screen):
         """ 
@@ -207,8 +209,8 @@ def time_count():
 def setup():
     global screen, size, my_table, ene_table, ball, time, key_list, my_score, ene_score
     size = (1200, 600)   # 画面サイズ
-    MY_X, MY_Y, MY_VX, MY_VY = 40, size[1] // 2, 0, 2
-    ENE_X, ENE_Y, ENE_VX, ENE_VY = size[0] - 40, size[1] // 2, 0, 2
+    MY_SIZE, MY_X, MY_Y, MY_VX, MY_VY = (10, 40), 40, size[1] // 2, 0, 2
+    ENE_SIZE, ENE_X, ENE_Y, ENE_VX, ENE_VY = (10, 40), size[0] - 40, size[1] // 2, 0, 2
     BALL_X, BALL_Y, BALL_R = size[0] // 2, size[1] // 2, 10
     
     if my_score > ene_score:
@@ -221,8 +223,8 @@ def setup():
         BALL_VX, BALL_VY = random.choice([-2, 2]), random.choice([-2, 2])
     
     screen = Screen("ホッケー", size[0], size[1])   # スクリーンを呼び出す
-    my_table = MyTable(MY_X, MY_Y, MY_VX, MY_VY)   # 味方台を呼び出す
-    ene_table = CPUTable(ENE_X, ENE_Y, ENE_VX, ENE_VY)   # 敵台を呼び出す
+    my_table = MyTable(MY_SIZE, MY_X, MY_Y, MY_VX, MY_VY)   # 味方台を呼び出す
+    ene_table = CPUTable(ENE_SIZE, ENE_X, ENE_Y, ENE_VX, ENE_VY)   # 敵台を呼び出す
     ball = Ball(BALL_R, BALL_X, BALL_Y, BALL_VX, BALL_VY)   # ボールを呼び出す
     time = 1
 

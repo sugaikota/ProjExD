@@ -31,7 +31,9 @@ class MyTable:
         color : 色のタプル(tuple)
         x : 初期x座標
         y : 初期y座標
-        vx : """
+        vx : x座標方向速度
+        vy : y座標方向速度
+        """
         self.vx, self.vy = vx, vy   # 速度
         self.color = color   # 台の色
         self.key_delta = {pg.K_UP : (0, -vy), pg.K_DOWN : (0, vy)}   # キーによる速度変化
@@ -62,12 +64,14 @@ class CPUTable:
     敵台にまつわることを制御する
     """
     def __init__(self, x: int, y: int, vx: int, vy: int, color: tuple=(255, 255, 255)):
-        """ 
+        """
         イニシャライザ
         color : 色のタプル(tuple)
         x : 初期x座標
         y : 初期y座標
-        vx : """
+        vx : x座標方向速度
+        vy : y座標方向速度
+        """
         self.vx, self.vy = vx, vy   # 速度
         self.color = color   # 台の色
         self.count = 1   # ボールとの接触回数を取得する
